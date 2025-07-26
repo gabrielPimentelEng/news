@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
   # Populate @products for show edit and update actions
   before_action :set_product, only: %i[ show edit update destroy]
+  before_action :require_login
   # allow not logged users to view products
   allow_unauthenticated_access only: %i[ index show ]
 
@@ -49,6 +50,10 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.expect(product: [:name ])
+      params.expect(product: [ :name ])
+    end
+
+    def require_login
+    redirect_to new_session_path unless authenticated?
     end
 end
