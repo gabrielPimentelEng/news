@@ -1,0 +1,25 @@
+<div class="mx-auto md:w-2/3 w-full bg-white rounded-lg p-10">
+  <h1 class="font-bold text-4xl">Sign up</h1>
+  <%= form_with model: @user, url: registration_url, class: "contents" do |form| %>
+    <div class="my-5">
+      <label for="session_email_address" class="font-bold">Email</label>
+      <%= form.email_field :email_address, id: "session_email_address", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "input-basic w-full" %>
+    </div>
+    <div class="my-5">
+      <label for="password" class="font-bold">Password</label>
+      <%= form.password_field :password, id: "password", required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "input-basic w-full" %>
+    </div>
+    <div class="my-5">
+      <label for="password-confirmation" class="font-bold">Confirm Password</label>
+      <%= form.password_field :password_confirmation, id: "password-confirmation", required: true, autocomplete: "current-password", placeholder: "Confirm your password", maxlength: 72, class: "input-basic w-full" %>
+    </div>
+    <div class="flex justify-center sm:items-center sm:gap-4">
+      <div class="inline">
+        <%= form.submit "Sign up", class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+      </div>
+      <div class="mt-4 text-sm text-gray-500 sm:mt-0">
+        <%= link_to "Forgot password?", new_password_path, class: "text-gray-700 underline" %>
+      </div>
+    </div>
+  <% end %>
+</div>

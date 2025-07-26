@@ -1,0 +1,26 @@
+<%= form_with url: session_path, class: "flex justify-center" do |form| %>
+  <div class="mx-auto md:w-2/3 w-full bg-white rounded-lg p-10">
+    
+    <h1 class="font-bold text-4xl">Login</h1>
+
+    <div class="my-5">
+      <label for="session_email_address" class="font-bold">Email</label>
+      <%= form.email_field :email_address, id: "session_email_address", class: "input-basic w-full", required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address] %>
+    </div>
+
+    <div class="my-5">
+      <label for="password" class="font-bold">Password</label>
+      <%= form.password_field :password, id: "password", class: "input-basic w-full", required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72 %>
+    </div>
+
+    <div class="flex justify-center w-full mb-2">
+      <%= form.submit "Sign in", class: " btn-primary cursor-pointer" %>
+    </div>
+    
+    <div class="flex justify-center items-center gap-4">
+      <%= link_to "Sign Up", new_registration_path, class: "link-primary " %>
+      <%= link_to "Forgot password?", new_password_path, class: "link-primary" %>
+    </div>
+  </div>
+<% end %>
+

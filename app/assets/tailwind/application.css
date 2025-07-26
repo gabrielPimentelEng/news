@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700;
+  }
+
+  .link-primary {
+    @apply font-medium text-blue-600 dark:text-blue-500 hover:underline;
+  }
+
+  .input-basic {
+    @apply bg-white  rounded-lg border border-gray-300 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 p-2;
+  }
+
+  .card {
+    @apply bg-white shadow-md rounded-lg p-6 mx-6 my-4;
+  }
+
+  .font-basic {
+    @apply font-sans font-bold ;
+  }
+
+
+}
