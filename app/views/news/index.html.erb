@@ -1,0 +1,39 @@
+  <div class="flex flex-col justify-center items-center p-6 rounded-lg">
+    <h1 class=" text-2xl font-bold mb-4">News Search</h1>
+
+    <%= form_with url: news_index_path, method: :get, local: true, class: " mb-4" do %>
+      <input type="text" name="q" placeholder="Enter keyword..." value="<%= params[:q] %>" class="input-basic " />
+      <button type="submit" class="btn-primary ml-2 cursor-pointer">Search</button>
+    <% end %>
+  </div>
+
+<% if @articles.present? %>
+
+<div class="flex flex-col justify-center items-center w-full">
+  <div class="grid grid-cols-3 gap-4 w-full max-w-3xl mb-2 font-bold border-b pb-2">
+    <div class="flex justify-center">Title</div>
+    <div class="flex justify-center">Source</div>
+    <div class="flex justify-center">Link / Save</div>
+  </div>
+  <% @articles.each do |article| %>
+    <div class="grid grid-cols-3 gap-4 w-full max-w-3xl items-center border-b py-2">
+      <div><%= article["title"] %></div>
+      <div class="flex justify-center text-gray-500"><%= article["source"]["name"] %></div>
+      <div class="flex gap-2">
+        <a href="<%= article["url"] %>" target="_blank" class="flex items-center text-blue-600 underline">Read more</a>
+        <%= button_to "📌 Save for Later", saved_articles_path, method: :post, params: {
+            saved_article: {
+              title: article["title"],
+              url: article["url"],
+              source: article["source"]["name"]
+            }
+          },
+            form: { data: { turbo: true } },  # Enable turbo form submission 
+            class: "btn-save-for-later cursor-pointer" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<% elsif params[:q].present? %>
+  <p>No results found.</p>
+<% end %>

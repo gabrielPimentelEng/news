@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
+  get "saved_articles/index"
+  get "saved_articles/create"
+  get "saved_articles/destroy"
+  get "news/index"
   get "registrations/new"
   get "registrations/create"
   resource :session
   resource :registration, only: %i[new create]
   resources :passwords, param: :token
+  resources :news, only: [ :index ]
+  resources :saved_articles, only: [ :index, :create, :destroy ]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
