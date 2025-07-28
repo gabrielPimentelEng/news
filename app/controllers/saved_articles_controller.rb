@@ -1,8 +1,14 @@
 class SavedArticlesController < ApplicationController
   before_action :require_login
-  def index
+def index
+  if params[:tag_id].present?
+    @selected_tag = Tag.find(params[:tag_id])
+    @saved_articles = Current.user.saved_articles.joins(:tags).where(tags: { id: @selected_tag.id })
+  else
     @saved_articles = Current.user.saved_articles
   end
+  @all_tags = Tag.order(:name)
+end
 
   def create
     @saved_article = Current.user.saved_articles.find_or_create_by(
@@ -10,10 +16,16 @@ class SavedArticlesController < ApplicationController
       url: params[:saved_article][:url],
       source: params[:saved_article][:source]
     )
+    if params[:tags].present?
+      tag_names = params[:tags].split(",").map(&:strip).reject(&:blank?)
+      tags = tag_names.map { |name| Tag.find_or_create_by(name: name) }
+      @saved_article.tags = tags
+    end
+    @saved_article.save
     respond_to do |format|
-    format.turbo_stream { render turbo_stream: turbo_stream.prepend("notices", partial: "shared/notice", locals: { notice: "Article saved!" }) }
-    format.html { redirect_to news_index_path, notice: "Article saved for later!" }
-  end
+      format.turbo_stream { render turbo_stream: turbo_stream.prepend("notices", partial: "shared/notice", locals: { notice: "Article saved!" }) }
+      format.html { redirect_to news_index_path, notice: "Article saved for later!" }
+    end
   end
 
   def destroy
