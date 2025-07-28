@@ -24,7 +24,7 @@
   <body>
     <nav class="flex justify-between  m-2">
       <div class="link-primary">
-        <%= link_to "Home", root_path %>
+        <%= link_to "Home", news_index_path %>
       </div>
 
 
@@ -32,12 +32,16 @@
 
 
       <% if authenticated? %>
-        <span class="font-bold"><%= Current.user.email_address %></span>
+        <div class="flex gap-2">
+          <span class="font-bold"><%= Current.user.email_address %></span>
+          <%= link_to "Read Later list", saved_articles_path, class: "link-primary" %>
+        </div>
       <% end %>
 
       <%= button_to "Log out", session_path, method: :delete,
       form_class: "inline-block", # applies to the <form>
       class: "btn-primary cursor-pointer" if authenticated? %>
+
       
     </nav>
 

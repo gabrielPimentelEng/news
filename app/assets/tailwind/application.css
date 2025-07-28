@@ -5,6 +5,14 @@
     @apply bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700;
   }
 
+  .btn-save-for-later {
+    @apply bg-blue-600 text-white font-semibold py-1 px-4 rounded hover:bg-blue-700;
+  }
+
+  .btn-remove {
+    @apply bg-red-600 text-white font-semibold py-1 px-4 rounded hover:bg-red-700;
+  }
+
   .link-primary {
     @apply font-medium text-blue-600 dark:text-blue-500 hover:underline;
   }
