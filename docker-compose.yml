@@ -1,38 +1,19 @@
 
 services:
-  # db:
-  #   image: postgres:16
-  #   environment:
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #     POSTGRES_DB: ${POSTGRES_DB}
-  #   volumes:
-  #     - db-data:/var/lib/postgresql/data
-  #   ports:
-  #     - "5432:5432"
-
   web:
     build:
       context: .
       dockerfile: Dockerfile.dev
     command: ./bin/dev
     environment:
-      RAILS_ENV: ${RAILS_ENV}
-      # DATABASE_URL: ${DATABASE_URL}
-      # Uncomment if you use master.key for credentials
-      # RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RAILS_ENV: development
     volumes:
       - .:/rails
-      # - bundle:/usr/local/bundle
       - node_modules:/rails/node_modules
       - tmp-data:/rails/tmp
     ports:
       - "3000:3000"
-    # depends_on:
-    #   - db
 
 volumes:
-  # db-data:
-  # bundle:
   node_modules:
   tmp-data:
