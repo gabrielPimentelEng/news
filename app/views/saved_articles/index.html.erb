@@ -1,20 +1,30 @@
 <div class="flex flex-col justify-center items-center p-6 rounded-lg">
   <h1 class="text-2xl font-bold mb-4">Read Later List</h1>
+  <div class="mb-4">
+    <%= form_with url: saved_articles_path, method: :get, local: true do %>
+      <%= select_tag :tag_id, options_from_collection_for_select(@all_tags, :id, :name, @selected_tag&.id), include_blank: "All Tags", class: "input-basic" %>
+      <%= submit_tag "Filter", class: "btn-primary ml-2" %>
+    <% end %>
+  </div>
 </div>
 <% if @saved_articles.any? %>
   <div class="flex flex-col justify-center items-center w-full">
-    <div class="grid grid-cols-3 gap-4 w-full max-w-3xl mb-2 font-bold border-b pb-2">
+    <div class="grid grid-cols-4 gap-4 w-full max-w-3xl mb-2 font-bold border-b pb-2">
       <div class="flex justify-center">Title</div>
       <div class="flex justify-center">Source</div>
       <div class="flex justify-center">Link / Save</div>
+      <div class="flex justify-center">Tag</div>
     </div>
   <% @saved_articles.each do |article| %>
-    <div class="grid grid-cols-3 gap-4 w-full max-w-3xl items-center border-b py-2">
+    <div class="grid grid-cols-4 gap-4 w-full max-w-3xl items-center border-b py-2">
       <div><%= article["title"] %></div>
       <div class="flex justify-center text-gray-500"><%= article["source"]["name"] %></div>
       <div class="flex gap-2">
         <a href="<%= article["url"] %>" target="_blank" class="flex items-center text-blue-600 underline">Read more</a>
         <%= button_to "Remove", saved_article_path(article), method: :delete, class: "btn-remove cursor-pointer" %>
+      </div>
+      <div class="flex justify-center">
+          <%= article.tags.map(&:name).join(", ") %>
       </div>
     </div>
     <% end %>
